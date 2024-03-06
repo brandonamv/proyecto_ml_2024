@@ -39,6 +39,10 @@ def image_picker():
     selected_image = img
     
     uploaded_image = st.file_uploader("Cargar imagen", type=['png', 'jpg'])
+
+    #Result
+    response_predict = get_prediction(uploaded_image,MODEL)
+    st.write("response pridct " + response_predict)
     # Guardar los archivos cargados
     selected_uploaded_image = ''
     if uploaded_image is not None:
@@ -47,6 +51,8 @@ def image_picker():
         selected_uploaded_image = file_path
 
     image_options(selected_image, selected_uploaded_image)
+
+
 
 # Función para guardar el archivo en una carpeta específica
 def save_uploaded_file(uploaded_file, folder_name='img'):
