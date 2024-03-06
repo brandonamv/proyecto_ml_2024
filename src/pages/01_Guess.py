@@ -2,8 +2,13 @@ import streamlit as st
 from PIL import Image
 from streamlit_image_select import image_select
 import os
+from utils.use_model import predict,get_model
 
 im = Image.open("src/favicon.ico")
+
+#globals
+MODEL = None
+MODEL_EXIST = False
 
 st.set_page_config(
     "EsKape Room",
@@ -15,7 +20,20 @@ st.set_page_config(
 if "number" not in st.session_state:
     st.session_state["number"] = 0
 
+#TODO test
+def get_prediction(img):
+    global MODEL
+
+    response = predict(img,MODEL)
+    return response 
+
 def image_picker():
+    global MODEL
+    global MODEL_EXIST
+
+    MODEL,MODEL_EXIST = get_model(MODEL,MODEL_EXIST)
+
+
     images = ["src/img/perro.png", "src/img/lobo.png", "src/img/caballo.png"]
     img = image_select("Selecciona una imagen", images, key="clicked_images", use_container_width= False)
     selected_image = img
