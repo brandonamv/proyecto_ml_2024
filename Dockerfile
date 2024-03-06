@@ -21,8 +21,8 @@ RUN pip install opencv-python
 RUN pip install -U scikit-learn
 RUN pip install st-pages
 RUN pip install streamlit-image-select
-
-
+RUN pip install torch torchvision 
+RUN pip install opencv-python
 
 
 
