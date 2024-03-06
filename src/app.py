@@ -30,9 +30,9 @@ def ui():
     # Ejemplo: :clipboard:
     show_pages(
         [
-            Page("pages/01_Guess.py", "Adivina la Imagen", ":pencil:"),
-            Page("pages/02_Captcha.py", "Captcha", ":checkered_flag:"),
-            Page("pages/03_Cargar_modelos.py", "Cargar Modelo", ":information_source:")
+            Page("src/pages/01_Guess.py", "Adivina la Imagen", ":pencil:"),
+            Page("src/pages/02_Captcha.py", "Captcha", ":checkered_flag:"),
+            Page("src/pages/03_Cargar_modelos.py", "Cargar Modelo", ":information_source:")
         ]
     )
 

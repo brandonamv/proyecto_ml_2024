@@ -2,7 +2,7 @@ import os
 import streamlit as st
 from PIL import Image
 
-im = Image.open("favicon.ico")
+im = Image.open("src/favicon.ico")
 st.set_page_config(
     "EsKape Room",
     im,

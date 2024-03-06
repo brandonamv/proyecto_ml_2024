@@ -3,7 +3,7 @@ from PIL import Image
 from streamlit_image_select import image_select
 import os
 
-im = Image.open("favicon.ico")
+im = Image.open("src/favicon.ico")
 
 st.set_page_config(
     "EsKape Room",
@@ -16,7 +16,7 @@ if "number" not in st.session_state:
     st.session_state["number"] = 0
 
 def image_picker():
-    images = ["img/perro.png", "img/lobo.png", "img/caballo.png"]
+    images = ["src/img/perro.png", "src/img/lobo.png", "src/img/caballo.png"]
     img = image_select("Selecciona una imagen", images, key="clicked_images", use_container_width= False)
     selected_image = img
     
