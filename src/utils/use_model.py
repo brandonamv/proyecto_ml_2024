@@ -1,3 +1,4 @@
+import os
 import torch
 import torchvision.transforms as transforms
 import torch.nn as nn
@@ -6,9 +7,7 @@ import cv2
 import numpy as np
 from joblib import load
 
-
-def search_trained_model():
-  class Net(nn.Module):
+class Net(nn.Module):
     def __init__(self):
         super().__init__()
         self.conv1 = nn.Conv2d(3, 6, 5)
@@ -26,8 +25,11 @@ def search_trained_model():
         x = F.relu(self.fc2(x))
         x = self.fc3(x)
         return x
+def search_trained_model():
+  
   model = Net()
-  model = load('/src/utils/model.joblib')
+
+  model = torch.load('src/utils/model.joblib')
   model.eval()
 
   return model
@@ -53,6 +55,7 @@ def predict(img,model):
   
   #Prepare image
   image = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
+  image = cv2.resize(image,(32,32))
   image=transform(image)
 
   x_predict = torch.utils.data.DataLoader([image], batch_size=batch_size,shuffle=True, num_workers=2)

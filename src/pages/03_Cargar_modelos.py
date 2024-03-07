@@ -3,11 +3,14 @@ import streamlit as st
 from PIL import Image
 import cv2
 import torch
+import torchvision
 import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 import torchvision.transforms as transforms
-
+transform = transforms.Compose(
+    [transforms.ToTensor(),
+     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 class Net(nn.Module):
     def __init__(self):
         super().__init__()
@@ -26,8 +29,7 @@ class Net(nn.Module):
         x = F.relu(self.fc2(x))
         x = self.fc3(x)
         return x
-criterion = nn.CrossEntropyLoss()
-optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
+
 batch_size = 4
 
 trainset = torchvision.datasets.CIFAR10(root='./data', train=True,
@@ -44,7 +46,9 @@ classes = ('plane', 'car', 'bird', 'cat',
            'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 
 model= Net()
-model = torch.load('/src/utils/model.joblib')
+model = torch.load('../utils/model.joblib')
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
 model.eval()
 
 im = Image.open("src/favicon.ico")

@@ -19,7 +19,6 @@ def image_picker():
         "src/captcha_images/cellphone.png"]
     img = image_select("Selecciona una imagen", images, key="clicked_images", use_container_width= False)
     selected_image = img
-
 def main():
     image_picker()
 

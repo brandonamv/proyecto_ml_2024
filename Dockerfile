@@ -23,7 +23,8 @@ RUN pip install st-pages
 RUN pip install streamlit-image-select
 RUN pip install joblib
 RUN pip install opencv-python
-RUN pip install torch
+RUN pip install torch 
+RUN pip install torchvision
 
 
 
