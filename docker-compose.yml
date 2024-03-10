@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  api:
+    build:
+      context: ./back
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      RELEASE: DEV
+    volumes:
+      - ./back/src:/usr/back/src
+  app:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    depends_on:
+      - api
+    ports:
+      - "8502:8502"
+    environment:
+      RELEASE: DEV
+    volumes:
+      - ./front/src/models:/usr/front/src/app/models
+      - ./front/.streamlit:/usr/front/src/app/.streamlit
