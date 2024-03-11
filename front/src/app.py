@@ -31,8 +31,6 @@ def ui():
     show_pages(
         [
             Page("src/pages/01_Guess.py", "Adivina la Imagen", ":pencil:"),
-            Page("src/pages/02_Captcha.py", "Captcha", ":checkered_flag:"),
-            Page("src/pages/03_Cargar_modelos.py", "Cargar Modelo", ":information_source:")
         ]
     )
 

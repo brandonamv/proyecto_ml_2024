@@ -1,7 +1,9 @@
 import os
 import torch
+import torchvision
 import torchvision.transforms as transforms
 import torch.nn as nn
+import torch.optim as optim
 import torch.nn.functional as F
 import cv2
 import numpy as np
@@ -25,28 +27,49 @@ class Net(nn.Module):
         x = F.relu(self.fc2(x))
         x = self.fc3(x)
         return x
-def search_trained_model():
-  
-  model = Net()
 
-  model = torch.load('src/models/model.joblib')
-  model.eval()
-
-  return model
-
-def get_model():
-    model = search_trained_model()
-    return model
-  
-async def predict(img):
-  model = get_model()
-  batch_size = 4
-  classes = ('plane', 'car', 'bird', 'cat',
-           'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
-  
-  transform = transforms.Compose(
+model = Net()
+# model = torch.load('model.joblib')
+# model.eval()
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
+batch_size = 4
+transform = transforms.Compose(
     [transforms.ToTensor(),
      transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+#train
+trainset = torchvision.datasets.CIFAR10(root='./data', train=True,
+                                        download=True, transform=transform)
+
+trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size,
+                                          shuffle=True, num_workers=2)
+
+#test
+testset = torchvision.datasets.CIFAR10(root='./data', train=False,
+                                       download=True, transform=transform)
+testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size,
+                                         shuffle=False, num_workers=2)
+
+classes = ('plane', 'car', 'bird', 'cat',
+           'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
+for epoch in range(2):
+
+    running_loss = 0.0
+    for i, data in enumerate(trainloader, 0):
+        inputs, labels = data
+        optimizer.zero_grad()
+        outputs = model(inputs)
+        loss = criterion(outputs, labels)
+        loss.backward()
+        optimizer.step()
+
+        running_loss += loss.item()
+        if i % 2000 == 1999:
+            print(f'[{epoch + 1}, {i + 1:5d}] loss: {running_loss / 2000:.3f}')
+            running_loss = 0.0
+print("finish entrenaiment")
+async def predict(img):
+
   
   #Prepare image
   image = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)

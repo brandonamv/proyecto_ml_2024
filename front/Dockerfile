@@ -11,15 +11,9 @@ RUN apt-get install -y ffmpeg
 RUN pip install streamlit
 RUN pip install pillow
 RUN pip install numpy
-RUN pip install scipy
-RUN pip install pandas
 RUN pip install st-pages
-RUN pip install tensorflow
-RUN pip install keras
 RUN pip install streamlit-drawable-canvas
 RUN pip install opencv-python
-RUN pip install -U scikit-learn
-RUN pip install st-pages
 RUN pip install streamlit-image-select
 
 
